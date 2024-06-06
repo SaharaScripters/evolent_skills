@@ -24,4 +24,4 @@ RegisterNUICallback('hideSkills', function(_, cb)
     cb({})
 end)
 
-RegisterKeyMapping('skills', 'Show Skills View', 'keyboard', conf.UIHotkey)
+--RegisterKeyMapping('skills', 'Show Skills View', 'keyboard', conf.UIHotkey)
