@@ -51,7 +51,7 @@ RegisterNetEvent(onLoadedEvent, function()
     skills.playerLoaded(source)
 end)
 
-lib.callback.register('evolent_skills:server:getSkills', function(source)
+lib.callback.register('ss_skills:server:getSkills', function(source)
     local skillsData = {}
     local skillsCache = skills.getAllSkills(source)
     for skillName, skillInfo in pairs(skillsCache) do
@@ -75,7 +75,7 @@ lib.callback.register('evolent_skills:server:getSkills', function(source)
     return skillsData
 end)
 
-lib.callback.register('evolent_skills:server:getSkills', getPlayerSkills)
-lib.callback.register('evolent_skills:server:getSkillLevel', skills.getSkillLevel)
-lib.callback.register('evolent_skills:server:getSkillXp', skills.getSkillXp)
-lib.callback.register('evolent_skills:server:getAllSkills', skills.getAllSkills)
+lib.callback.register('ss_skills:server:getSkills', getPlayerSkills)
+lib.callback.register('ss_skills:server:getSkillLevel', skills.getSkillLevel)
+lib.callback.register('ss_skills:server:getSkillXp', skills.getSkillXp)
+lib.callback.register('ss_skills:server:getAllSkills', skills.getAllSkills)

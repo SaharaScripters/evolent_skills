@@ -7,7 +7,7 @@ RegisterCommand('skills', function()
 
     local data = {
         visible = visible,
-        playerSkills = visible and lib.callback.await('evolent_skills:server:getSkills') or nil
+        playerSkills = visible and lib.callback.await('ss_skills:server:getSkills') or nil
     }
 
     SendNUIMessage({
