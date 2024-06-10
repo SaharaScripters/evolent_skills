@@ -87,6 +87,14 @@ return {
             icon = 'fas fa-spray-can',
             color = '#FF7F50'
         },
+        lockpicking = {
+            label = 'Lockpicking',
+            baseXp = 100,
+            nextLevelMultiplier = 2.0,
+            maxLevel = 200,
+            icon = 'fas fa-key',
+            color = '#FFD700'
+        },
         hacking = {
             label = 'Hacking',
             baseXp = 250,
