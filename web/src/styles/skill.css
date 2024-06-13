@@ -72,6 +72,16 @@
     font-weight: 700;
 }
 
+.skill-description {
+    color: var(--primary-text-color);
+    font-size: var(--font-size-xxs);
+    font-weight: 300;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
 .skill-xp {
     color: var(--primary-text-color);
     font-size: var(--font-size-sm);

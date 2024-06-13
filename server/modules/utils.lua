@@ -2,13 +2,8 @@ local conf = require 'config'
 
 local utils = {}
 
----@param skillName string
-local function precomputeXpRequirements(skillName)
-    local skillConfig = conf.Skills[skillName]
-    if not skillConfig then
-        error(('Skill \'%s\' is not configured!'):format(skillName), 1)
-    end
-
+---@param skillConfig table
+local function precomputeXpRequirements(skillConfig)
     local xpTable = {}
     local currentMaxXp = skillConfig.baseXp
     xpTable[1] = currentMaxXp
@@ -22,8 +17,11 @@ local function precomputeXpRequirements(skillName)
 end
 
 utils.xpTables = {}
-for skillName in pairs(conf.Skills) do
-    utils.xpTables[skillName] = precomputeXpRequirements(skillName)
+for skillName, skillConfig in pairs(conf.Skills) do
+    utils.xpTables[skillName] = precomputeXpRequirements(skillConfig)
+end
+for skillName, skillConfig in pairs(conf.gangSkills) do
+    utils.xpTables[skillName] = precomputeXpRequirements(skillConfig)
 end
 
 ---@param xpAmount number
@@ -37,7 +35,7 @@ function utils.calculateLevel(xpAmount, skillName)
     return level
 end
 
-function utils.getXpRangeForLevel(level, skillName)
+function utils.getXpRangeForLevel(level, skillName, skillConfig)
     local xpTable = utils.xpTables[skillName]
     if not xpTable then
         error(('Skill \'%s\' is not configured!'):format(skillName), 1)
@@ -48,7 +46,7 @@ function utils.getXpRangeForLevel(level, skillName)
     if level < #xpTable then
         maxXp = xpTable[level]
     else
-        maxXp = math.ceil(xpTable[level] * conf.Skills[skillName].nextLevelMultiplier)
+        maxXp = math.ceil(xpTable[level] * skillConfig.nextLevelMultiplier)
     end
 
     return minXp, maxXp
@@ -59,8 +57,10 @@ end
 ---@param target number
 ---@param value number
 ---@param isLevel boolean
-function utils.validateSkillCommand(source, skill, target, value, isLevel)
-    if not conf.Skills[skill] then
+function utils.validateSkillCommand(source, skill, target, value, isLevel, targetType)
+    targetType = targetType or 'player'
+    local skillConfig = targetType == 'gang' and conf.gangSkills[skill] or conf.Skills[skill]
+    if not skillConfig then
         lib.notify(source, {
             title = 'Skills',
             description = ('Skill %s does not exist'):format(skill),
@@ -69,20 +69,20 @@ function utils.validateSkillCommand(source, skill, target, value, isLevel)
         return false
     end
 
-    if not DoesPlayerExist(tostring(target)) then
+    if targetType == 'player' and not DoesPlayerExist(tostring(target)) then
         lib.notify(source, {
             title = 'Skills',
-            description = ('Player with the ID of %d does not exist'):format(target),
+            description = ('Player with the ID of %s does not exist'):format(tostring(target)),
             type = 'error'
         })
         return false
     end
 
     if isLevel then
-        if type(value) ~= 'number' or value <= 0 or value > conf.Skills[skill].maxLevel then
+        if type(value) ~= 'number' or value <= 0 or value > skillConfig.maxLevel then
             lib.notify(source, {
                 title = 'Skills',
-                description = ('Level must be a number between 1 and %d'):format(conf.Skills[skill].maxLevel),
+                description = ('Level must be a number between 1 and %d'):format(skillConfig.maxLevel),
                 type = 'error'
             })
             return false

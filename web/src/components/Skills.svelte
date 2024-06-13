@@ -1,7 +1,15 @@
 <script lang="ts">
   import { skills } from "../store/skills";
+  import { title } from "../store/stores";
   import Skill from "./Skill.svelte";
   import { slide } from "svelte/transition";
+
+  let myTitle = 'My Skills';
+
+
+  title.subscribe((newTitle: string) => {
+    myTitle = newTitle;
+  });
 </script>
 
 <div
@@ -10,10 +18,13 @@
   out:slide={{ duration: 200 }}
 >
   <div class="skills-header">
-    <p><span>Your</span> Skills</p>
+    <p>{myTitle}</p>
   </div>
 
   <div class="skills-list">
+    {#if $skills.length === 0}
+      <p>No skills to show</p>
+    {/if}
     {#each $skills as skill (skill.label)}
       <Skill {skill} />
     {/each}

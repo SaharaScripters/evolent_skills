@@ -43,6 +43,11 @@
         <p>{skill.level}</p>
       </div>
     </div>
+    <div class="skill-data-middle">
+      <p class="skill-description" title="{skill.description}">
+        {skill.description}
+      </p>
+    </div>
     <div class="skill-data-lower">
       <p class="skill-xp">
         XP: {skill.xp}/{skill.levelData.maxXp}

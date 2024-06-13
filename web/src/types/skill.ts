@@ -1,5 +1,6 @@
 export type Skill = {
   label: string,
+  description: string,
   level: number,
   xp: number,
   levelData: {

@@ -2,12 +2,11 @@ local skills = require 'server.modules.skills'
 local utils = require 'server.modules.utils'
 
 lib.addCommand('addxp', {
-    help = 'Add XP to a player\'s skill',
+    help = 'Add XP to a gang/player\'s skill',
     params = {
         {
             name = 'target',
-            type = 'playerId',
-            help = 'Target player\'s server id'
+            help = 'Target player\'s server id or gang name'
         },
         {
             name = 'skill',
@@ -18,22 +17,30 @@ lib.addCommand('addxp', {
             name = 'amount',
             type = 'number',
             help = 'Amount of XP to give'
-        }
+        },
+        {
+            name = 'targetType',
+            type = 'string',
+            help = 'Type of target (player or gang)',
+            optional = true,
+        },
     },
     restricted = 'group.admin'
 }, function(source, args)
     local skill = args.skill
     local amount = args.amount
     local target = args.target
+    local targetType = args.targetType or 'player'
 
-    if not utils.validateSkillCommand(target, skill, target, amount, false) then
+    if not utils.validateSkillCommand(source, skill, target, amount, false, targetType) then
         return
     end
 
-    skills.addXp(target, skill, amount)
+    skills.addXp(target, skill, amount, targetType)
+    local targetName = targetType == 'player' and GetPlayerName(target) or target
     lib.notify(source, {
         title = 'Skills',
-        description = ('Added %d XP to %s for %s skill'):format(amount, GetPlayerName(target), skill),
+        description = ('Added %d XP to %s for %s skill'):format(amount, targetName, skill),
         type = 'success'
     })
 end)
@@ -43,7 +50,6 @@ lib.addCommand('removexp', {
     params = {
         {
             name = 'target',
-            type = 'playerId',
             help = 'Target player\'s server id'
         },
         {
@@ -55,19 +61,26 @@ lib.addCommand('removexp', {
             name = 'amount',
             type = 'number',
             help = 'Amount of XP to remove'
-        }
+        },
+        {
+            name = 'targetType',
+            type = 'string',
+            help = 'Type of target (player or gang)',
+            optional = true,
+        },
     },
     restricted = 'group.admin'
 }, function(source, args)
     local skill = args.skill
     local amount = args.amount
     local target = args.target
+    local targetType = args.targetType or 'player'
 
-    if not utils.validateSkillCommand(target, skill, target, amount, false) then
+    if not utils.validateSkillCommand(source, skill, target, amount, false, targetType) then
         return
     end
 
-    skills.removeXp(target, skill, amount)
+    skills.removeXp(target, skill, amount, targetType)
     lib.notify(source, {
         title = 'Skills',
         description = ('Removed %d XP from %s for %s skill'):format(amount, GetPlayerName(target), skill),
@@ -80,7 +93,6 @@ lib.addCommand('setlevel', {
     params = {
         {
             name = 'target',
-            type = 'playerId',
             help = 'Target player\'s server id'
         },
         {
@@ -100,7 +112,7 @@ lib.addCommand('setlevel', {
     local level = args.level
     local target = args.target
 
-    if not utils.validateSkillCommand(target, skill, target, level, true) then
+    if not utils.validateSkillCommand(source, skill, target, level, true) then
         return
     end
 

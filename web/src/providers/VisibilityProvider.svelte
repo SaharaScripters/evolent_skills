@@ -2,7 +2,7 @@
   import { useNuiEvent } from "../utils/useNuiEvent";
   import { fetchNui } from "../utils/fetchNui";
   import { onMount } from "svelte";
-  import { visibility } from "../store/stores";
+  import { visibility, title } from "../store/stores";
   import { skills } from "../store/skills";
   import type { Skill } from "$types/skill";
 
@@ -14,10 +14,11 @@
 
   useNuiEvent(
     "showSkills",
-    (data: { visible: boolean; playerSkills: Skill[] | undefined }) => {
+    (data: { visible: boolean; title: string, playerSkills: Skill[] | undefined }) => {
       if (data.playerSkills) {
         skills.set(data.playerSkills);
       }
+      title.set(data.title);
       visibility.set(data.visible);
     },
   );

@@ -4,14 +4,16 @@
   import { debugData } from './utils/debugData';
   import type { Skill } from '$types/skill.ts';
 
-  debugData<{ visible: boolean, playerSkills: Skill[] }>([
+  debugData<{ visible: boolean, title: String, playerSkills: Skill[]}>([
     {
       action: 'showSkills',
       data: {
         visible: true,
+        title: 'My Skills',
         playerSkills: [
           {
             label: 'Driving',
+            description: 'Are you a good driver?',
             level: 2,
             xp: 176,
             icon: 'fas fa-car',
@@ -23,6 +25,7 @@
           },
           {
             label: 'Shooting',
+            description: 'How do you handle a gun?',
             level: 2,
             xp: 104,
             icon: 'fa-solid fa-gun',
@@ -32,7 +35,19 @@
               maxXp: 200
             }
           },
-        ]
+          {
+            label: 'Hacking',
+            description: 'Can you hack the planet?',
+            level: 2,
+            xp: 104,
+            icon: 'fas fa-laptop',
+            color: '#e6e6e6',
+            levelData: {
+              minXp: 100,
+              maxXp: 200
+            }
+          },
+        ],
       }
     }
   ]);
