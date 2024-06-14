@@ -44,7 +44,7 @@ RegisterCommand('gangskills', function()
 
     local data = {
         visible = visible,
-        title = 'Gang Skills',
+        title = 'Ogranization Operations',
         playerSkills = skills
     }
 
