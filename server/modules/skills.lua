@@ -90,8 +90,7 @@ end
 ---@param source number
 ---@param skillName string
 ---@param xpAmount number
-function skills.addPlayerXp(source, skillName, xpAmount, targetType)
-    targetType = targetType or 'player'
+function skills.addPlayerXp(source, skillName, xpAmount)
     if not isValidSource(source) then return end
     if not isValidSkillName(skillName) then return end
     if not isValidXpAmount(xpAmount) then return end
@@ -109,7 +108,8 @@ end
 function skills.addXp(target, skillName, xpAmount, targetType)
     targetType = targetType or 'player'
     if targetType == 'player' then
-        skills.addPlayerXp(target --[[@as number]], skillName, xpAmount)
+        local src = tonumber(target) or 0
+        skills.addPlayerXp(src, skillName, xpAmount)
     elseif targetType == 'gang' then
         skills.addGangXp(tostring(target), skillName, xpAmount)
     end
@@ -160,7 +160,8 @@ end
 function skills.removeXp(target, skillName, xpAmount, targetType)
     targetType = targetType or 'player'
     if targetType == 'player' then
-        skills.removePlayerXp(target --[[@as number]], skillName, xpAmount)
+        local src = tonumber(target) or 0
+        skills.removePlayerXp(src, skillName, xpAmount)
     elseif targetType == 'gang' then
         skills.removeGangXp(tostring(target), skillName, xpAmount)
     end
