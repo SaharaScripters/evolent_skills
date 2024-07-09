@@ -133,8 +133,8 @@ return {
             icon = 'fas fa-gun',
             color = '#ff5959'
         },
-        pettytheft = {
-            label = 'Petty Theft',
+        pickpocket = {
+            label = 'Pick pocket',
             description = 'Can you steal a candy bar?',
             baseXp = 100,
             nextLevelMultiplier = 1.5,
@@ -142,18 +142,27 @@ return {
             icon = 'fas fa-hand-holding-dollar',
             color = '#e6e6e6',
         },
+        kidnapping = {
+            label = 'Kidnapping',
+            description = 'Who do you want to kidnap?',
+            baseXp = 100,
+            nextLevelMultiplier = 1.5,
+            maxLevel = 100,
+            icon = 'fas fa-user-slash',
+            color = '#ff7f50',
+        },
     },
     ignoredGangs = {
         ['none'] = true,
     },
     gangSkills = {
-        mugging = {
-            label = 'Mugging',
-            description = 'Do you know how to mug people?',
+        territory_control = {
+            label = 'Territory Control',
+            description = 'Can you control the territory?',
             baseXp = 100,
             nextLevelMultiplier = 1.5,
             maxLevel = 100,
-            icon = 'fas fa-hand-paper',
+            icon = 'fas fa-map-marked-alt',
             color = '#af7cff'
         },
         drugtrafficking = {
