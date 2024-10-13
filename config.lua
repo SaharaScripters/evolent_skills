@@ -151,6 +151,15 @@ return {
             icon = 'fas fa-user-slash',
             color = '#ff7f50',
         },
+        houserobbery = {
+            label = 'House Robbery',
+            description = 'Do you know how to rob a house?',
+            baseXp = 100,
+            nextLevelMultiplier = 1.5,
+            maxLevel = 100,
+            icon = 'fas fa-home',
+            color = '#ff7f50',
+        },
     },
     ignoredGangs = {
         ['none'] = true,
